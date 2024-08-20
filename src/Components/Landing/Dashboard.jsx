@@ -11,6 +11,8 @@ const Dashboard = () => {
             const res = await fetch(`https://reqres.in/api/users?page=${page}`);
             const result = await res.json();
             setData(result.data);
+            console.log(result.data)
+
         };
         getData();
     }, [page]);
@@ -37,16 +39,33 @@ const Dashboard = () => {
                             <Table.Cell>{user.last_name}</Table.Cell>
                             <Table.Cell>{user.email}</Table.Cell>
                             <Table.Cell>
-                                <Link to={`${user.id}`}  className='bg-[#2b71b4] rounded-md py-2 px-4 text-white'>
+                                <Link to={`${user.id}`} className='bg-[#2b71b4] rounded-md py-2 px-4 text-white'>
                                     Show Details
                                 </Link>
-                                </Table.Cell>
+                            </Table.Cell>
                         </Table.Row>
                     ))}
                 </Table.Body>
             </Table>
+            <div className="flex justify-center mt-4">
+                <button
+                    onClick={() => setPage((prevPage) => Math.max(prevPage - 1,1))}
+                    className="bg-[#5c9da5] text-white py-2 px-4 rounded-l-md disabled:bg-[#b6dadf]"
+                    disabled={page === 1}
+                >
+                    Previous
+                </button>
+                <button
+                    onClick={() => setPage((prevPage) => prevPage + 1)}
+                    className="bg-[#5c9da5] text-white py-2 px-4 rounded-r-md ml-2 disabled:bg-[#b6dadf]"
+                    disabled={page === 2}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
+    
 };
 
 export default Dashboard;
